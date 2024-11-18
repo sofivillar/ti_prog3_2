@@ -29,7 +29,7 @@ export default class Login extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>LOGIN</Text>
+        <Text style={styles.title}>LOGIN</Text>
 
         <TextInput style={styles.field}
           keyboardType='email-address'
@@ -44,13 +44,13 @@ export default class Login extends Component {
           onChangeText={text => this.setState({ password: text })}
           value={this.state.password} />
 
-        <TouchableOpacity style={styles.boton} onPress={() => this.login()}>
-          <Text> Enter Login </Text>
+        <TouchableOpacity style={styles.loginButton} onPress={() => this.login()}>
+          <Text style={styles.loginButtonText}> Enter Login </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Register')}>
-          <Text>Ir a Register</Text>
+          <Text style={styles.registerText}>Ir a Register</Text>
         </TouchableOpacity>
 
       </View>
@@ -61,26 +61,42 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5', // Light gray background
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 10,
-    marginTop: 20
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#000',  // Black text
+    marginBottom: 20,
   },
   field: {
-    height: 20,
-    padding: 15,
-    border: 1,
-    borderColor: "green",
-    borderStyle: "solid",
-    borderRadius: 6,
-    margin: 10
-  },
-  boton: {
-    backgroundColor: "#28a745",
+    height: 40,
     padding: 10,
-    textAlign: "center",
+    backgroundColor: '#fff', // White input field background
+    borderColor: '#ccc', // Light gray border
+    borderWidth: 1,
     borderRadius: 4,
-    borderColor: "#28a745"
+    marginBottom: 15,
+  },
+  loginButton: {
+    backgroundColor: '#f08080', // Light pink button background
+    padding: 15,
+    borderRadius: 4,
+    shadowColor: '#ccc', // Light gray shadow
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
+  loginButtonText: {
+    color: '#fff', // White button text
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  registerText: {
+    color: '#000', // Black text
+    marginTop: 10,
   }
-})
+});
