@@ -29,7 +29,7 @@ export default class Register extends Component {
       })
       .then(() => {
         this.setState({ registered: true, messageErr: "" })},
-        this.props.navigation.navigate("Login"))
+        this.props.navigation.navigate("Login")) // no deberia ir a login si el mail esta mal puesto
       .catch((error) => {
         console.log("Hubo un error en el registro", error.message);
         this.setState({ messageErr: error.message })
