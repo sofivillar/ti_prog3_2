@@ -7,7 +7,7 @@ import Register from './src/screens/Register';
 import HomeMenu from './src/components/HomeMenu';
 import Home from './src/screens/Home';
 
-const Stack =createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (

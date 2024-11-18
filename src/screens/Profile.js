@@ -4,7 +4,7 @@ export class Profile extends Component {
   render() {
     return (
       <div>
-        Profile        
+        Profile
       </div>
     )
   }

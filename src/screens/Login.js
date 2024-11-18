@@ -8,8 +8,8 @@ export default class Login extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      email: " ",
-      password: " ",
+      email: "",
+      password: "",
       loggedIn: false
     }
   }
@@ -61,7 +61,7 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5', // Light gray background
+    backgroundColor: '#f5f5f5',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
@@ -69,34 +69,34 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#000',  // Black text
+    color: '#000',
     marginBottom: 20,
   },
   field: {
     height: 40,
     padding: 10,
-    backgroundColor: '#fff', // White input field background
-    borderColor: '#ccc', // Light gray border
+    backgroundColor: '#fff',
+    borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 4,
     marginBottom: 15,
   },
   loginButton: {
-    backgroundColor: '#f08080', // Light pink button background
+    backgroundColor: '#f08080',
     padding: 15,
     borderRadius: 4,
-    shadowColor: '#ccc', // Light gray shadow
+    shadowColor: '#ccc',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
   },
   loginButtonText: {
-    color: '#fff', // White button text
+    color: '#fff',
     fontSize: 16,
     textAlign: 'center',
   },
   registerText: {
-    color: '#000', // Black text
+    color: '#000',
     marginTop: 10,
   }
 });
