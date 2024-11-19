@@ -10,18 +10,20 @@ export default class Login extends Component {
     this.state = {
       email: "",
       password: "",
-      loggedIn: false
+      loggedIn: false,
+      messageErr: " "
     }
   }
 
-  componentDidMount() {
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        this.props.navigation.navigate("HomeMenu")
-        this.setState({ loggedIn: false })
-      }
-    })
-  }
+  // componentDidMount() {
+  //   auth.onAuthStateChanged(user => {
+  //     if (user) {
+  //       this.props.navigation.navigate("HomeMenu")
+  //       this.setState({ loggedIn: false })
+  //     }
+  //   })
+  // }
+  // lo dejo comentado para poder probar el login hasta que funcione el logout, pero es el remember me, creo que funciona!!!!!!
 
   handleLogin = () => {
     const { email, password } = this.state;
@@ -29,11 +31,20 @@ export default class Login extends Component {
     auth.signInWithEmailAndPassword(email, password)
       .then((response) => {
         console.log(response)
-        this.setState({ loggedIn: true });
+        this.setState({ loggedIn: true, messageErr: "" });
         this.props.navigation.navigate("HomeMenu");
       })
       .catch(error => {
-        this.setState({ error: 'Credenciales inválidas.' })
+        //this.setState({ error: 'Credenciales inválidas.' })
+        if (!email.includes("@")) {
+          this.setState({ messageErr:"Email mal escrito"});
+        } else if (password.length < 6) {
+          this.setState({ messageErr: "La contraseña debe tener minimo 6 caracteres" });
+        } else if (error.message.includes('Credenciales')) {
+          this.setState({ messageErr: "Email o contraseña incorrectos"});
+        } else {
+          this.setState({ messageErr: "Ocurrio un error" })
+        }
       })
   }
 
@@ -59,6 +70,8 @@ export default class Login extends Component {
         <TouchableOpacity style={styles.loginButton} onPress={() => this.handleLogin()}>
           <Text style={styles.loginButtonText}> Enter Login </Text>
         </TouchableOpacity>
+
+        {this.state.messageErr && <Text>{this.state.messageErr}</Text>}
 
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Register')}>
