@@ -23,7 +23,9 @@ export default class Login extends Component {
     })
   }
 
-  handleLogin(email, password) {
+  handleLogin = () => {
+    const { email, password } = this.state;
+    
     auth.signInWithEmailAndPassword(email, password)
       .then((response) => {
         console.log(response)
@@ -43,15 +45,16 @@ export default class Login extends Component {
         <TextInput style={styles.field}
           keyboardType='email-address'
           placeholder='email'
+          value={this.state.email}
           onChangeText={text => this.setState({ email: text })}
-          value={this.state.email} />
+        />
 
         <TextInput style={styles.field}
           keyboardType='default'
           placeholder='password'
           secureTextEntry={true}
-          onChangeText={text => this.setState({ password: text })}
-          value={this.state.password} />
+          value={this.state.password}
+          onChangeText={text => this.setState({ password: text })} />
 
         <TouchableOpacity style={styles.loginButton} onPress={() => this.handleLogin()}>
           <Text style={styles.loginButtonText}> Enter Login </Text>
