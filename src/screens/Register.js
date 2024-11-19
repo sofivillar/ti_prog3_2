@@ -18,18 +18,24 @@ export default class Register extends Component {
 
   handleRegister(email, password) {
 
+    if (!this.state.email || !this.state.password || !this.state.username) {
+      this.setState({ messageErr: "Quedaron campos vacios" });
+      return;
+    }
+
     auth
       .createUserWithEmailAndPassword(email, password)
       .then(response => {
-        return db.collection("users").doc(response.username.uid).set({ // no se por que no se guarda la coleccion
+        return db.collection("users").doc(response.user.uid).set({
           email: this.state.email,
           username: this.state.username,
           createdAt: Date.now()
         })
       })
       .then(() => {
-        this.setState({ registered: true, messageErr: "" })},
-        this.props.navigation.navigate("Login")) // no deberia ir a login si el mail esta mal puesto
+        this.setState({ registered: true, messageErr: "" })
+        this.props.navigation.navigate("Login")
+      })
       .catch((error) => {
         console.log("Hubo un error en el registro", error.message);
         this.setState({ messageErr: error.message })
@@ -37,6 +43,9 @@ export default class Register extends Component {
   }
 
   render() {
+
+    const formCompleto = this.state.email && this.state.password && this.state.username;
+
     return (
       <View style={styles.container}>
 
@@ -59,9 +68,11 @@ export default class Register extends Component {
           onChangeText={text => this.setState({ username: text })}
           value={this.state.username} />
 
-        <TouchableOpacity onPress={() => this.handleRegister(this.state.email, this.state.password)} style={styles.button}>
-          <Text style={styles.texto}>Registrate!</Text>
-        </TouchableOpacity>
+        {formCompleto && (
+          <TouchableOpacity onPress={() => this.handleRegister()} style={styles.button}>
+            <Text style={styles.texto}>Registrate!</Text>
+          </TouchableOpacity>
+        )}
 
         {this.state.messageErr && <Text>{this.state.messageErr}</Text>}
 
@@ -78,7 +89,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 10,

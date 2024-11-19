@@ -73,8 +73,7 @@ export default class Login extends Component {
 
         {this.state.messageErr && <Text>{this.state.messageErr}</Text>}
 
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Register')}>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')}>
           <Text style={styles.registerText}>Ir a Register</Text>
         </TouchableOpacity>
 
@@ -107,7 +106,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   loginButton: {
-    backgroundColor: '#f08080',
+    backgroundColor: "#ffc0f1",
     padding: 15,
     borderRadius: 4,
     shadowColor: '#ccc',
@@ -116,7 +115,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   loginButtonText: {
-    color: '#fff',
+    color: '#grey',
     fontSize: 16,
     textAlign: 'center',
   },
