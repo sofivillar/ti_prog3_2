@@ -14,7 +14,16 @@ export default class Login extends Component {
     }
   }
 
-  login(email, password) {
+  componentDidMount() {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.props.navigation.navigate("HomeMenu")
+        this.setState({ loggedIn: false })
+      }
+    })
+  }
+
+  handleLogin(email, password) {
     auth.signInWithEmailAndPassword(email, password)
       .then((response) => {
         console.log(response)
@@ -44,7 +53,7 @@ export default class Login extends Component {
           onChangeText={text => this.setState({ password: text })}
           value={this.state.password} />
 
-        <TouchableOpacity style={styles.loginButton} onPress={() => this.login()}>
+        <TouchableOpacity style={styles.loginButton} onPress={() => this.handleLogin()}>
           <Text style={styles.loginButtonText}> Enter Login </Text>
         </TouchableOpacity>
 
