@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 
 export default class Home extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            loggedIn: false,
+            messageErr: ""
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>

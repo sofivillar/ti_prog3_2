@@ -15,15 +15,13 @@ export default class Login extends Component {
     }
   }
 
-  // componentDidMount() {
-  //   auth.onAuthStateChanged(user => {
-  //     if (user) {
-  //       this.props.navigation.navigate("HomeMenu")
-  //       this.setState({ loggedIn: false })
-  //     }
-  //   })
-  // }
-  // lo dejo comentado para poder probar el login hasta que funcione el logout, pero es el remember me, creo que funciona!!!!!!
+  componentDidMount(){
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.props.navigation.navigate('HomeMenu');
+      }
+    });
+  }
 
   handleLogin = () => {
     const { email, password } = this.state;
@@ -40,10 +38,8 @@ export default class Login extends Component {
           this.setState({ messageErr:"Email mal escrito"});
         } else if (password.length < 6) {
           this.setState({ messageErr: "La contraseña debe tener minimo 6 caracteres" });
-        } else if (error.message.includes('Credenciales')) {
-          this.setState({ messageErr: "Email o contraseña incorrectos"});
         } else {
-          this.setState({ messageErr: "Ocurrio un error" })
+          this.setState({ messageErr: "Email o contraseña incorrectos" })
         }
       })
   }

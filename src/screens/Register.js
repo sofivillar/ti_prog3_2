@@ -16,6 +16,14 @@ export default class Register extends Component {
     }
   }
 
+  componentDidMount(){
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.props.navigation.navigate('HomeMenu');
+      }
+    });
+  }
+
   handleRegister(email, password) {
 
     if (!this.state.email || !this.state.password || !this.state.username) {
@@ -69,7 +77,7 @@ export default class Register extends Component {
           value={this.state.username} />
 
         {formCompleto && (
-          <TouchableOpacity onPress={() => this.handleRegister()} style={styles.button}>
+          <TouchableOpacity onPress={() => this.handleRegister(this.state.email, this.state.password)} style={styles.button}>
             <Text style={styles.texto}>Registrate!</Text>
           </TouchableOpacity>
         )}
