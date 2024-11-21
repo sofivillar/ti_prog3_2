@@ -47,18 +47,53 @@ export class Profile extends Component {
 
   render() {
     return (
-      <View>
-        <View>
-          <Text>{this.state.username}</Text>
-          <TouchableOpacity onPress={() => this.handleLogout()}>
-            <Text>Salir</Text>
+      <View style={styles.container}>
+        <View style={styles.userInfo}>
+          <Text style={styles.username}>{this.state.username}</Text>
+          <Text style={styles.email}>{this.state.email}</Text>
+
+          <TouchableOpacity style={styles.button} onPress={() => this.handleLogout()}>
+            <Text style={styles.buttonText}>Salir</Text>
           </TouchableOpacity>
         </View>
-
-        <Text>{this.state.email}</Text>
       </View>
     )
   }
 }
 
 export default Profile
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f8f9fa',
+    padding: 20,
+  },
+  userInfo: {
+    marginBottom: 20,
+    alignItems: 'center',
+  },
+  username: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 10,
+  },
+  email: {
+    fontSize: 16,
+    color: '#555',
+  },
+  button: {
+    backgroundColor: "lightpink",
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+});
