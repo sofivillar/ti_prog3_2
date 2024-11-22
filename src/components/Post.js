@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
-import {db, auth} from "../firebase/config";
-import AntDesign from '@expo/vector-icons/AntDesign';
+import { db, auth } from "../firebase/config";
+// import AntDesign from '@expo/vector-icons/AntDesign';
 
 export class Post extends Component {
     constructor(props) {
@@ -11,12 +11,14 @@ export class Post extends Component {
         }
     }
 
-    handleDeletePost = (postId) => { // hasta que no creemos post no se puede probar
-        db.collection("posts").doc(postId).delete()
+    handleDeletePost = () => {
+        const { post } = this.state
+
+        db.collection("posts").doc(post.id).delete()
             .then(() => {
                 console.log("Se elimino la publicacion");
                 if (this.props.onDelete) {
-                    this.props.onDelete(postId) // para que cambie tambien en profile no solo el console.log
+                    this.props.onDelete(post.id) // para que cambie tambien en profile no solo el console.log
                 }
             })
             .catch((error) => {
@@ -33,16 +35,21 @@ export class Post extends Component {
     }
 
     render() {
-        const {post} = this.state;
-        const createdAt = new Date(post.data.createdAt).toLocaleDateString();
+        const { post } = this.state;
+        const createdAt = new Date(post.createdAt).toLocaleDateString();
 
         return (
             <View style={styles.container}>
                 <Text>Post</Text>
-                <Text>Usuario: {post.userName} </Text>
+                <Text>Usuario: {post.usernName} </Text>
                 <Text>Likes: {post.likes} </Text>
+                <Text>Creado el: {createdAt} </Text>
                 <Button title="Like" onPress={() => this.handleLike(post.id)} />
                 <Button title="Dislike" onPress={() => this.handleDislike(post.id)} />
+
+                <TouchableOpacity onPress={this.handleDeletePost()}>
+                    <Text>Eliminar publicacion</Text>
+                </TouchableOpacity>
             </View>
         )
     }

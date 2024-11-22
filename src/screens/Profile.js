@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import { auth, db } from "../firebase/config";
 import { StyleSheet } from 'react-native';
+import Post from '../components/Post';
 
 export class Profile extends Component {
 
@@ -50,10 +51,14 @@ export class Profile extends Component {
             let posts = [];
 
             docs.forEach(doc => {
-              posts.push({id: doc.id}, doc.data()); // separo el id
+              posts.push({
+                id: doc.id,
+                ...doc.data()
+              });
             });
             this.setState({ posteos: posts });
           });
+
       }
     });
   }
@@ -62,14 +67,22 @@ export class Profile extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.userInfo}>
-          <Text style={styles.username}>Nombre de usuario: {this.state.username}</Text>
-          <Text style={styles.email}>Mail registrado: {this.state.email}</Text>
+          <Text style={styles.username}>{this.state.username}</Text>
+          <Text style={styles.email}>{this.state.email}</Text>
           <Text>Posteos: {this.state.posteos.length}</Text>
 
           <TouchableOpacity style={styles.button} onPress={() => this.handleLogout()}>
             <Text style={styles.buttonText}>Salir</Text>
           </TouchableOpacity>
         </View>
+
+        <FlatList data={this.state.posteos} keyExtractor={(item) => item.id.toString()} renderItem={({ item }) => (
+          <Post
+            post={item}
+            onDelete={this.handleDeletePost()}
+          />
+        )}
+        />
       </View>
     )
   }
