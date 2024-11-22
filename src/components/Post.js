@@ -7,18 +7,18 @@ export class Post extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            post: this.props.post
+            posts: this.props.posts
         }
     }
 
     handleDeletePost = () => {
-        const { post } = this.state
+        const { posts } = this.state
 
-        db.collection("posts").doc(post.id).delete()
+        db.collection("posts").doc(posts.id).delete()
             .then(() => {
                 console.log("Se elimino la publicacion");
                 if (this.props.onDelete) {
-                    this.props.onDelete(post.id) // para que cambie tambien en profile no solo el console.log
+                    this.props.onDelete(posts.id) // para que cambie tambien en profile no solo el console.log
                 }
             })
             .catch((error) => {
@@ -35,17 +35,18 @@ export class Post extends Component {
     }
 
     render() {
-        const { post } = this.state;
-        const createdAt = new Date(post.createdAt).toLocaleDateString();
+        const { posts } = this.state;
+        const createdAt = new Date(posts.createdAt).toLocaleDateString();
 
         return (
             <View style={styles.container}>
                 <Text>Post</Text>
-                <Text>Usuario: {post.usernName} </Text>
-                <Text>Likes: {post.likes} </Text>
+                <Text>{posts.data.description}</Text>
+                <Text>Usuario: {posts.data.owner} </Text>
+                <Text>Likes: {posts.data.likes} </Text>
                 <Text>Creado el: {createdAt} </Text>
-                <Button title="Like" onPress={() => this.handleLike(post.id)} />
-                <Button title="Dislike" onPress={() => this.handleDislike(post.id)} />
+                <Button title="Like" onPress={() => this.handleLike(posts.id)} />
+                <Button title="Dislike" onPress={() => this.handleDislike(posts.id)} />
 
                 <TouchableOpacity onPress={this.handleDeletePost()}>
                     <Text>Eliminar publicacion</Text>

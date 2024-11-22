@@ -9,7 +9,8 @@ export default class Home extends Component {
         super(props)
         this.state = {
             user: "user",
-            post: []
+            posts: [],
+            loading: true
         }
     }
 
@@ -21,38 +22,42 @@ export default class Home extends Component {
     //     });
     // }
 
+    handlePosts = () => {
+        db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(
+            (docs) => {
+                let posts = [];
+                docs.forEach(doc => {
+                    posts.push({
+                        id: doc.id,
+                        data: doc.data()
+                    })
+                    this.setState({
+                        posts: posts,
+                        loading: false
+                    })
+                })
+            }),
+            (error) => {
+                console.error(error);
+            }
+    }
+
     render() {
-        if (this.state.post.length > 0) {
-            return (
-                <View style={styles.container}>
-                    <Text>Home</Text>
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('Login')}>
-                        <Text>Ir a Login</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('Register')}>
-                        <Text>Ir a Register</Text>
-                    </TouchableOpacity>
-                    <FlatList style={styles.flatlist} data={this.state.post} keyExtractor={(item) => item.id} renderItem={({ item }) => <Post post={item} />} />
-                </View>
-            )
-        } else {
-            return (
-                <View style= {styles.container}>
-                    <Text>Home</Text>
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('Login')}>
-                        <Text>Ir a Login</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('Register')}>
-                        <Text>Ir a Register</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.texto}>No hay posts</Text>
-                </View>
-            )
-        }
+        
+        return (
+            <View style={styles.container}>
+                <Text>Home</Text>
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('Login')}>
+                    <Text>Ir a Login</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('Register')}>
+                    <Text>Ir a Register</Text>
+                </TouchableOpacity>
+                <FlatList style={styles.flatlist} data={this.state.posts} keyExtractor={(item) => item.id} renderItem={({ item }) => <Post post={item} />} />
+            </View>
+        )
 
     }
 }
