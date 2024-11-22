@@ -30,17 +30,30 @@ export class Profile extends Component {
       if (!user) {
         this.props.navigation.navigate("Login");
       } else {
-        db.collection("users").where("email", "==", auth.currentUser.email).onSnapshot(docs => {
-          let users = [];
+        db.collection("users")
+          .where("email", "==", auth.currentUser.email)
+          .onSnapshot(docs => {
+            let users = [];
 
-          docs.forEach(doc => {
-            users.push(doc.data())
+            docs.forEach(doc => {
+              users.push(doc.data())
+            });
+
+            if (users.length > 0) {
+              this.setState({ username: users[0].username });
+            }
           });
 
-          if (users.length > 0) {
-            this.setState({ username: users[0].username });
-          }
-        });
+        db.collection("posts")
+          .where("email", "==", auth.currentUser.email)
+          .onSnapshot(docs => {
+            let posts = [];
+
+            docs.forEach(doc => {
+              posts.push({id: doc.id}, doc.data()); // separo el id
+            });
+            this.setState({ posteos: posts });
+          });
       }
     });
   }
@@ -49,8 +62,9 @@ export class Profile extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.userInfo}>
-          <Text style={styles.username}>{this.state.username}</Text>
-          <Text style={styles.email}>{this.state.email}</Text>
+          <Text style={styles.username}>Nombre de usuario: {this.state.username}</Text>
+          <Text style={styles.email}>Mail registrado: {this.state.email}</Text>
+          <Text>Posteos: {this.state.posteos.length}</Text>
 
           <TouchableOpacity style={styles.button} onPress={() => this.handleLogout()}>
             <Text style={styles.buttonText}>Salir</Text>

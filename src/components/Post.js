@@ -11,10 +11,13 @@ export class Post extends Component {
         }
     }
 
-    handleDeletePost = (postId) => {
+    handleDeletePost = (postId) => { // hasta que no creemos post no se puede probar
         db.collection("posts").doc(postId).delete()
             .then(() => {
                 console.log("Se elimino la publicacion");
+                if (this.props.onDelete) {
+                    this.props.onDelete(postId) // para que cambie tambien en profile no solo el console.log
+                }
             })
             .catch((error) => {
                 console.log(error);
