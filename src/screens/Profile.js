@@ -26,6 +26,21 @@ export class Profile extends Component {
       })
   }
 
+  handleDeletePost = () => {
+    const { posts } = this.state
+
+    db.collection("posts").doc(posts.id).delete()
+      .then(() => {
+        console.log("Se elimino la publicacion");
+        if (this.props.delete) {
+          this.props.delete(posts.id) // para que cambie tambien en profile no solo el console.log
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
   componentDidMount() {
     auth.onAuthStateChanged(user => {
       if (!user) {
@@ -53,7 +68,7 @@ export class Profile extends Component {
             docs.forEach(doc => {
               posts.push({
                 id: doc.id,
-                ...doc.data()
+                data: doc.data()
               });
             });
             this.setState({ posteos: posts });
@@ -64,6 +79,8 @@ export class Profile extends Component {
   }
 
   render() {
+    console.log(this.state.posteos);
+    
     return (
       <View style={styles.container}>
         <View style={styles.userInfo}>
@@ -78,8 +95,8 @@ export class Profile extends Component {
 
         <FlatList data={this.state.posteos} keyExtractor={(item) => item.id.toString()} renderItem={({ item }) => (
           <Post
-            post={item}
-            onDelete={this.handleDeletePost()}
+            posts={item}
+            onDelete={(id) => this.handleDeletePost(id)}
           />
         )}
         />
