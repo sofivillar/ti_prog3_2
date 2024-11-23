@@ -12,6 +12,16 @@ export class NewPost extends Component {
   }
   componentDidMount() {
     const user = auth.currentUser
+    db.collection('users').onSnapshot(
+      docs => { 
+        let users = []
+        docs.forEach(doc =>
+          users.push({
+            id: doc.id
+          })
+        )
+      }
+    ) 
     // Ver si hay un usuario logueado
   }
 
