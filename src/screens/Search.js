@@ -22,6 +22,9 @@ export class Search extends Component {
           users.push({ id: doc.id, data: doc.data() })
         });
         console.log("Sanpshot");
+        this.setState({
+          users:users
+        })
 
       })
   }
@@ -31,15 +34,17 @@ export class Search extends Component {
   }
 
   render() {
-    console.log(this.state.users);
-
     const resultadosBusqueda = this.handleSearch()
-
     return (
       <View>
         <Text>Buscador de usuarios</Text>
-        <TextInput placeholder='Buscador' keyboardType='default' value={this.state.busqueda} onChangeText={(texto) => this.setState({ busqueda: texto })} />
-        {resultadosBusqueda.length === 0 ? (<Text>No hay resultados</Text>) : (<FlatList data={this.state.posteos} keyExtractor={(item) => item.id.toString()} renderItem={({ item }) => (item.data.username)} />)}
+        <TextInput 
+          placeholder='Buscador' 
+          keyboardType='default' 
+          value={this.state.busqueda} 
+          onChangeText={(texto) => this.setState({ busqueda: texto })}
+        />
+        {resultadosBusqueda.length === 0 ? (<Text>No hay resultados</Text>) : (<FlatList data={resultadosBusqueda} keyExtractor={item => item.id.toString()} renderItem={({ item }) =><Text> {item.data.username}</Text> }/> )}
       </View>
     )
   }
