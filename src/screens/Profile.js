@@ -84,16 +84,17 @@ export class Profile extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.userInfo}>
+          <Text style={styles.title}>Profile</Text>
           <Text style={styles.username}>{this.state.username}</Text>
           <Text style={styles.email}>{this.state.email}</Text>
-          <Text>Posteos: {this.state.posteos.length}</Text>
+          <Text style={styles.posts}>Posteos: {this.state.posteos.length}</Text>
 
           <TouchableOpacity style={styles.button} onPress={() => this.handleLogout()}>
-            <Text style={styles.buttonText}>Salir</Text>
+            <Text style={styles.buttonText}>Logout</Text>
           </TouchableOpacity>
         </View>
 
-        <FlatList data={this.state.posteos} keyExtractor={(item) => item.id.toString()} renderItem={({ item }) => (
+        <FlatList style={styles.flatList} data={this.state.posteos} keyExtractor={(item) => item.id.toString()} renderItem={({ item }) => (
           <Post
             posts={item}
             onDelete={(id) => this.handleDeletePost(id)}
@@ -119,25 +120,48 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: 'center',
   },
-  username: {
+  title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#000',
     marginBottom: 10,
   },
+  username: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#222',
+    marginBottom: 5,
+  },
   email: {
-    fontSize: 16,
-    color: '#555',
+    fontSize: 15,
+    color: '#222',
+    marginBottom: 3
+  },
+  posts:{
+    fontSize: 14,
+    color: '#222',
+    marginBottom: 3
   },
   button: {
     backgroundColor: "lightpink",
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 20,
+    padding: 15,
+    borderRadius: 4,
+    shadowColor: '#ccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    marginBottom: 15, 
+    marginTop: 10
   },
+
   buttonText: {
-    color: '#fff',
+    color: '#grey',
     fontSize: 16,
-    fontWeight: '600',
-  },
+    textAlign: 'center',
+  }, 
+
+  flatList:{ 
+    flex: 1, 
+    width: '100%'
+  }
 });

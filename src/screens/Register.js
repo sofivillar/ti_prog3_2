@@ -16,7 +16,7 @@ export default class Register extends Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     auth.onAuthStateChanged(user => {
       if (user) {
         this.props.navigation.navigate('HomeMenu');
@@ -56,21 +56,22 @@ export default class Register extends Component {
 
     return (
       <View style={styles.container}>
+        <Text style={styles.title}>Register</Text>
 
-        <TextInput style={styles.textInput}
+        <TextInput style={styles.field}
           keyboardType='email-address'
           placeholder='Ingrese su mail'
           onChangeText={text => this.setState({ email: text })}
           value={this.state.email} />
 
-        <TextInput style={styles.textInput}
+        <TextInput style={styles.field}
           keyboardType='default'
           placeholder='Ingrese su contraseña'
           secureTextEntry={true}
           onChangeText={text => this.setState({ password: text })}
           value={this.state.password} />
 
-        <TextInput style={styles.textInput}
+        <TextInput style={styles.field}
           keyboardType='default'
           placeholder='Ingrese su usuario'
           onChangeText={text => this.setState({ username: text })}
@@ -78,14 +79,14 @@ export default class Register extends Component {
 
         {formCompleto && (
           <TouchableOpacity onPress={() => this.handleRegister(this.state.email, this.state.password)} style={styles.button}>
-            <Text style={styles.texto}>Registrate!</Text>
+            <Text style={styles.buttonText}>Registrate!</Text>
           </TouchableOpacity>
         )}
 
         {this.state.messageErr && <Text>{this.state.messageErr}</Text>}
 
         <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style={styles.button}>
-          <Text style={styles.texto}>Ya tengo cuenta</Text>
+          <Text style={styles.buttonText}>Ya tengo cuenta</Text>
         </TouchableOpacity>
 
       </View>
@@ -104,29 +105,38 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
 
-  textInput: {
-    height: 20,
-    paddingVertical: 15,
-    paddingHorizontal: 10,
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#000',
+    marginBottom: 20,
+  },
+
+  field: {
+    height: 40,
+    padding: 10,
+    backgroundColor: '#fff',
+    borderColor: '#ccc',
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderStyle: "solid",
-    borderRadius: 6,
-    marginVertical: 10
+    borderRadius: 4,
+    marginBottom: 15,
   },
 
   button: {
     backgroundColor: "lightpink",
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    textAlign: "center",
+    padding: 15,
     borderRadius: 4,
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: "#ffa9e2"
+    shadowColor: '#ccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    marginBottom: 15
   },
 
-  texto: {
-    color: "#grey"
+  buttonText: {
+    color: '#grey',
+    fontSize: 16,
+    textAlign: 'center',
   }
+
 })

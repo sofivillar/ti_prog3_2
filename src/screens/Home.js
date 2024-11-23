@@ -48,14 +48,14 @@ export default class Home extends Component {
 
         return (
             <View style={styles.container}>
-                <Text>Home</Text>
-                <TouchableOpacity
+                <Text style={styles.title}>Home</Text>
+                <TouchableOpacity 
                     onPress={() => this.props.navigation.navigate('Login')}>
-                    <Text>Ir a Login</Text>
+                    <Text style={styles.irAText}>Ir a Login</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('Register')}>
-                    <Text>Ir a Register</Text>
+                    <Text style={styles.irAText}>Ir a Register</Text>
                 </TouchableOpacity>
                 <FlatList style={styles.flatlist} data={this.state.posts} keyExtractor={(item) => item.id} renderItem={({ item }) => <Post posts={item} />} />
             </View>
@@ -71,14 +71,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#000',
+        marginBottom: 10,
+    },
+    irAText: {
+        color: '#000',
+        marginTop: 10,
+    },
+
     flatlist: {
         flex: 1,
         width: "100%",
     },
-    texto: {
-        backgroundColor: "lightpink",
-        borderRadius: "5px",
-        padding: "10px",
-        margin: "10px"
-    }
+    
 });
