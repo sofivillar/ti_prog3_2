@@ -15,13 +15,14 @@ export default class Home extends Component {
         }
     }
 
-     componentDidMount() {
-         auth.onAuthStateChanged(user => {
-             if (!user) {
-                 this.props.navigation.navigate('Login');                
-             }
-         });
-     }
+    componentDidMount() {
+        auth.onAuthStateChanged(user => {
+            if (!user) {
+                this.props.navigation.navigate('Login');
+            }
+        });
+        this.handlePosts()
+    }
 
     handlePosts = () => {
         db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(
@@ -32,10 +33,10 @@ export default class Home extends Component {
                         id: doc.id,
                         data: doc.data()
                     })
-                    this.setState({
-                        posts: posts,
-                        loading: false
-                    })
+                })
+                this.setState({
+                    posts: posts,
+                    loading: false
                 })
             }),
             (error) => {
@@ -44,7 +45,7 @@ export default class Home extends Component {
     }
 
     render() {
-        
+
         return (
             <View style={styles.container}>
                 <Text>Home</Text>

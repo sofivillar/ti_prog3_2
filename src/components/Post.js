@@ -46,7 +46,7 @@ export class Post extends Component {
 
                 {this.state.miLike == true ? <TouchableOpacity onPress={() => this.handleDislike()}><Text>Dislike</Text></TouchableOpacity> : <TouchableOpacity onPress={() => this.handleLike()}><Text>Like</Text></TouchableOpacity>}
 
-                <TouchableOpacity onPress={this.handleDeletePost()}>
+                <TouchableOpacity>
                     <Text>Eliminar publicacion</Text>
                 </TouchableOpacity>
             </View>
