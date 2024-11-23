@@ -1,52 +1,50 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { db, auth } from "../firebase/config";
+import firebase from 'firebase';
 // import AntDesign from '@expo/vector-icons/AntDesign';
 
 export class Post extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            posts: this.props.posts
+            posts: this.props.posts,
+            likes: this.props.posts.data.likes.length,
+            miLike: this.props.posts.data.likes.includes(auth.currentUser.email)
         }
     }
 
-    handleDeletePost = () => {
-        const { posts } = this.state
-
-        db.collection("posts").doc(posts.id).delete()
-            .then(() => {
-                console.log("Se elimino la publicacion");
-                if (this.props.onDelete) {
-                    this.props.onDelete(posts.id) // para que cambie tambien en profile no solo el console.log
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+    handleLike(){
+        db.collection("posts").doc(this.props.posts.id).update({likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)})
+        .then(() => this.setState({
+            likes: this.props.posts.data.likes.length,
+            miLike: true
+        }))
     }
 
-    handleLike = () => {
-
-    }
-
-    handleDislike = () => {
-
+    handleDislike(){
+        db.collection("posts").doc(this.props.posts.id).update({likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)})
+        .then(() => this.setState({
+            likes: this.props.posts.data.likes.length,
+            miLike: false
+        }))
     }
 
     render() {
+        console.log(this.props.posts);
+        
         const { posts } = this.state;
         const createdAt = new Date(posts.createdAt).toLocaleDateString();
 
         return (
             <View style={styles.container}>
                 <Text>Post</Text>
-                <Text>{posts.data.description}</Text>
+                <Text>{this.props.posts.data.description}</Text>
                 <Text>Usuario: {posts.data.owner} </Text>
                 <Text>Likes: {posts.data.likes} </Text>
                 <Text>Creado el: {createdAt} </Text>
-                <Button title="Like" onPress={() => this.handleLike(posts.id)} />
-                <Button title="Dislike" onPress={() => this.handleDislike(posts.id)} />
+
+                {this.state.miLike == true ? <TouchableOpacity onPress={() => this.handleDislike()}><Text>Dislike</Text></TouchableOpacity> : <TouchableOpacity onPress={() => this.handleLike()}><Text>Like</Text></TouchableOpacity>}
 
                 <TouchableOpacity onPress={this.handleDeletePost()}>
                     <Text>Eliminar publicacion</Text>

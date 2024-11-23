@@ -34,7 +34,7 @@ export default class Register extends Component {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then(response => {
-        return db.collection("users").doc(response.user.uid).set({
+        db.collection("users").add({
           email: this.state.email,
           username: this.state.username,
           createdAt: Date.now()

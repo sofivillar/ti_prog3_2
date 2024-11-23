@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { FlatList } from 'react-native-web';
 import Post from '../components/Post';
+import { auth, db } from "../firebase/config";
 
 export default class Home extends Component {
 
@@ -14,13 +15,13 @@ export default class Home extends Component {
         }
     }
 
-    // componentDidMount() {
-    //     auth.onAuthStateChanged(user => {
-    //         if (!user) {
-    //             this.props.navigation.navigate('Login');                
-    //         }
-    //     });
-    // }
+     componentDidMount() {
+         auth.onAuthStateChanged(user => {
+             if (!user) {
+                 this.props.navigation.navigate('Login');                
+             }
+         });
+     }
 
     handlePosts = () => {
         db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(
@@ -55,7 +56,7 @@ export default class Home extends Component {
                     onPress={() => this.props.navigation.navigate('Register')}>
                     <Text>Ir a Register</Text>
                 </TouchableOpacity>
-                <FlatList style={styles.flatlist} data={this.state.posts} keyExtractor={(item) => item.id} renderItem={({ item }) => <Post post={item} />} />
+                <FlatList style={styles.flatlist} data={this.state.posts} keyExtractor={(item) => item.id} renderItem={({ item }) => <Post posts={item} />} />
             </View>
         )
 

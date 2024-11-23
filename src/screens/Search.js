@@ -3,13 +3,27 @@ import { View, Text, TouchableOpacity, TextInput } from 'react-native'
 
 export class Search extends Component {
 
-  /* handleSearch(){
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: [],
+      busqueda: ""
+    }
+  }
 
-  } */
+  componentDidMount() {
+    
+  }
+
+  handleSearch() {
+    
+  }
 
   render() {
     return (
-      <Text>Buscador de usuarios</Text>
+      <View>
+        <Text>Buscador de usuarios</Text>
+      </View>
     )
   }
 }
