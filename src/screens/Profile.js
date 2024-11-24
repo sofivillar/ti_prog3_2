@@ -32,9 +32,7 @@ export class Profile extends Component {
     db.collection("posts").doc(posts.id).delete()
       .then(() => {
         console.log("Se elimino la publicacion");
-        if (this.props.delete) {
-          this.props.delete(posts.id) // para que cambie tambien en profile no solo el console.log
-        }
+         this.props.delete(posts.id)
       })
       .catch((error) => {
         console.log(error);
@@ -96,9 +94,7 @@ export class Profile extends Component {
 
         <FlatList style={styles.flatList} data={this.state.posteos} keyExtractor={(item) => item.id.toString()} renderItem={({ item }) => (
           <Post
-            posts={item}
-            onDelete={(id) => this.handleDeletePost(id)}
-          />
+            posts={item}/>
         )}
         />
       </View>

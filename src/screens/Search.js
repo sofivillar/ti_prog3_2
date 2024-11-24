@@ -44,7 +44,7 @@ export default class Search extends Component {
           value={this.state.busqueda} 
           onChangeText={(texto) => this.setState({ busqueda: texto })}
         />
-        {resultadosBusqueda.length === 0 ? (<Text style={styles.resultadoText}>No results </Text>) : (<FlatList style={styles.flatList} data={resultadosBusqueda} keyExtractor={item => item.id.toString()} renderItem={({ item }) => <Text style={styles.resultadoText}> {item.data.username}</Text> }/> )}
+        {resultadosBusqueda.length === 0 ? (<Text style={styles.resultadoText}>No hay resultados para tu busqueda</Text>) : (<FlatList style={styles.flatList} data={resultadosBusqueda} keyExtractor={item => item.id.toString()} renderItem={({ item }) => <Text style={styles.resultadoText}> {item.data.username}</Text> }/> )}
       </View>
     )
   }
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
   },
   field: {
     height: 40,
+    width: '30%',
     padding: 10,
     backgroundColor: '#fff',
     borderColor: '#ccc',
@@ -73,12 +74,20 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   resultadoText: {
-    color: '#grey',
+    color: '#888',
     fontSize: 16,
     textAlign: 'center',
-  }, 
-  flatList:{ 
-    flex: 1, 
-    width: '100%'
-  }
+    marginVertical: 10,
+  },
+  flatList: {
+    flex: 1,
+    width: '100%',
+  },
+  resultadoItem: {
+    fontSize: 16,
+    padding: 10,
+    backgroundColor: '#fff',
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
+  },
 });

@@ -6,14 +6,15 @@ export class NewPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      description:'',
+      description: '',
       email: ''
     }
   }
+
   componentDidMount() {
     const user = auth.currentUser
     db.collection('users').onSnapshot(
-      docs => { 
+      docs => {
         let users = []
         docs.forEach(doc =>
           users.push({
@@ -21,7 +22,7 @@ export class NewPost extends Component {
           })
         )
       }
-    ) 
+    )
     // Ver si hay un usuario logueado
   }
 
@@ -32,25 +33,27 @@ export class NewPost extends Component {
       db.collection('posts').add({
         owner: user.email,
         description: this.state.description,
-        createdAt: Date.now(),
+        createdAt: Date.now(), // no funciona dice invalid date
         likes: [] // Para después, cuando alguien likee el posteo voy a agregar su mail aca
       })
         .then(() => {
           this.setState({ description: '' });
           this.props.navigation.navigate('Home')
         })
-        .catch(error =>{console.log("Something went wrong while posting", error)});
+        .catch(error => { console.log("Algo fallo en el posteo", error) });
     }
   }
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Create New Post</Text>
+
         <TextInput style={styles.field}
           keyboardType='default'
-          placeholder='Describe what you are thinking...'
+          placeholder='Publica aca!'
           onChangeText={text => this.setState({ description: text })}
           value={this.state.description} />
+
         <TouchableOpacity style={styles.postButton} onPress={() => this.handleSubmit()}>
           <Text style={styles.postButtonText}>Post!</Text>
         </TouchableOpacity>

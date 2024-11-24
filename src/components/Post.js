@@ -14,39 +14,40 @@ export class Post extends Component {
         }
     }
 
-    handleLike(){
-        db.collection("posts").doc(this.props.posts.id).update({likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)})
-        .then(() => this.setState({
-            likes: this.props.posts.data.likes.length,
-            miLike: true
-        }))
+    handleLike() {
+        db.collection("posts").doc(this.props.posts.id)
+            .update({ likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email) })
+            .then(() => this.setState({
+                likes: this.props.posts.data.likes.length,
+                miLike: true
+            }))
     }
 
-    handleDislike(){
-        db.collection("posts").doc(this.props.posts.id).update({likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)})
-        .then(() => this.setState({
-            likes: this.props.posts.data.likes.length,
-            miLike: false
-        }))
+    handleDislike() {
+        db.collection("posts").doc(this.props.posts.id)
+            .update({ likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email) })
+            .then(() => this.setState({
+                likes: this.props.posts.data.likes.length,
+                miLike: false
+            }))
     }
 
     render() {
         console.log(this.props.posts);
-        
+
         const { posts } = this.state;
         const createdAt = new Date(posts.createdAt).toLocaleDateString();
 
         return (
             <View style={styles.container}>
-                <Text>Post</Text>
-                <Text>{this.props.posts.data.description}</Text>
-                <Text>Usuario: {posts.data.owner} </Text>
-                <Text>Likes: {posts.data.likes} </Text>
-                <Text>Creado el: {createdAt} </Text>
+                <Text style={styles.description}>{this.props.posts.data.description}</Text>
+                <Text style={styles.info}>Usuario: {posts.data.owner} </Text>
+                <Text style={styles.info}>Likes: {posts.data.likes} </Text>
+                <Text style={styles.info}>Creado el: {createdAt} </Text>
 
-                {this.state.miLike == true ? <TouchableOpacity onPress={() => this.handleDislike()}><Text>Dislike</Text></TouchableOpacity> : <TouchableOpacity onPress={() => this.handleLike()}><Text>Like</Text></TouchableOpacity>}
+                {this.state.miLike == true ? <TouchableOpacity style={styles.button} onPress={() => this.handleDislike()}><Text>Dislike</Text></TouchableOpacity> : <TouchableOpacity style={styles.button} onPress={() => this.handleLike()}><Text>Like</Text></TouchableOpacity>}
 
-                <TouchableOpacity>
+                <TouchableOpacity style={styles.deleteButton}>
                     <Text>Eliminar publicacion</Text>
                 </TouchableOpacity>
             </View>
@@ -60,6 +61,39 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        marginVertical: 10,
+        width: '100%',
+        margin: 1,
+    },
+    description: {
+        fontSize: 16,
+        color: '#555',
+        marginBottom: 10,
+        fontWeight: 'bold',
+    },
+    info: {
+        fontSize: 14,
+        color: '#777',
+        marginBottom: 5,
+    },
+    button: {
+        backgroundColor: "lightpink",
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginVertical: 5,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    deleteButton: {
+        backgroundColor: '#ffdcd6',
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginTop: 10,
     }
 })
 
