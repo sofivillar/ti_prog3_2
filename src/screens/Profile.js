@@ -82,37 +82,48 @@ export class Profile extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.userInfo}>
-          <Text style={styles.title}>Mi perfil</Text>
-          <Text style={styles.username}>{this.state.username}</Text>
-          <Text style={styles.email}>{this.state.email}</Text>
-          <Text style={styles.posts}>Posteos: {this.state.posteos.length}</Text>
+        {auth.currentUser ? (
+          <View style={styles.container}>
+            <View style={styles.userInfo}>
+              <Text style={styles.title}>Mi perfil</Text>
+              <Text style={styles.username}>{this.state.username}</Text>
+              <Text style={styles.email}>{this.state.email}</Text>
+              <Text style={styles.posts}>Posteos: {this.state.posteos.length}</Text>
 
-          <TouchableOpacity style={styles.button} onPress={() => this.handleLogout()}>
-            <Text style={styles.buttonText}>Logout</Text>
-          </TouchableOpacity>
-        </View>
+              <TouchableOpacity style={styles.button} onPress={() => this.handleLogout()}>
+                <Text style={styles.buttonText}>Logout</Text>
+              </TouchableOpacity>
+            </View>
 
-        {this.state.posteos.length === 0 ? (
-          <View>
-            <Text>No hay publicaciones</Text>
+            {this.state.posteos.length === 0 ? (
+              <View>
+                <Text>No hay publicaciones</Text>
+              </View>
+            ) : (
+              <FlatList style={styles.flatList}
+                data={this.state.posteos}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                  <View>
+                    <Post
+                      posts={item}
+                    />
+                    <TouchableOpacity style={styles.buttonDelete} onPress={() => this.handleDeletePost(item.id)}>
+                      <FontAwesomeIcon icon={faTrashCan} size={16} color="black" />
+                    </TouchableOpacity>
+                  </View>
+                )}
+              />
+            )}
           </View>
         ) : (
-          <FlatList style={styles.flatList}
-            data={this.state.posteos}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <View>
-                <Post
-                  posts={item}
-                />
-                <TouchableOpacity style={styles.buttonDelete} onPress={() => this.handleDeletePost(item.id)}>
-                  <FontAwesomeIcon icon={faTrashCan} size={16} color="black" />
-                </TouchableOpacity>
-              </View>
-            )}
-          />
-        )}
+          <View style={styles.container}>
+            <Text style={styles.title}>Logueate para ver tu perfil!</Text>
+            <TouchableOpacity style={styles.button}
+              onPress={() => this.props.navigation.navigate('Login')}>
+              <Text style={styles.buttonText}>Ir a Login</Text>
+            </TouchableOpacity>
+          </View>)}
       </View>
     )
   }

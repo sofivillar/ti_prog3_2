@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
 import { db, auth } from "../firebase/config";
 import firebase from 'firebase';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
 
 export class Post extends Component {
     constructor(props) {
@@ -43,11 +46,9 @@ export class Post extends Component {
                 <Text style={styles.info}>Creado el: {createdAt} </Text>
 
                 {this.state.miLike == true ? <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => this.handleDislike()}><Text>Dislike</Text>
+                    onPress={() => this.handleDislike()}><FontAwesomeIcon icon={solidHeart} size={18} color='pink'/>
                 </TouchableOpacity> : <TouchableOpacity
-                    style={styles.button}
-                    onPress={() => this.handleLike()}><Text>Like</Text>
+                    onPress={() => this.handleLike()}><FontAwesomeIcon icon={regularHeart} size={18} color='pink'/>
                 </TouchableOpacity>}
             </View>
         )
