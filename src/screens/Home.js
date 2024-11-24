@@ -48,7 +48,8 @@ export default class Home extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>Home</Text>
-                <View style={styles.botones}>
+                {auth.currentUser ? (<FlatList style={styles.flatlist} data={this.state.posts} keyExtractor={(item) => item.id} renderItem={({ item }) => <Post posts={item} />} />
+                ) : (<View style={styles.botones}>
                     <TouchableOpacity style={styles.button}
                         onPress={() => this.props.navigation.navigate('Login')}>
                         <Text style={styles.buttonText}>Ir a Login</Text>
@@ -57,8 +58,7 @@ export default class Home extends Component {
                         onPress={() => this.props.navigation.navigate('Register')}>
                         <Text style={styles.buttonText}>Ir a Register</Text>
                     </TouchableOpacity>
-                </View>
-                <FlatList style={styles.flatlist} data={this.state.posts} keyExtractor={(item) => item.id} renderItem={({ item }) => <Post posts={item} />} />
+                </View>)}
             </View>
         )
 
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
     },
     buttonText: {
-        color: '#fff',
+        color: '#222',
         fontSize: 12,
         fontWeight: 'bold',
     },

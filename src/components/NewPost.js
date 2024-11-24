@@ -44,17 +44,22 @@ export class NewPost extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Nueva publicacion</Text>
 
-        <TextInput style={styles.field}
-          keyboardType='default'
-          placeholder='Publica aca!'
-          onChangeText={text => this.setState({ description: text })}
-          value={this.state.description} />
+        {auth.currentUser ? (<View>
+          <Text style={styles.title}>Nueva publicacion</Text>
+          <TextInput style={styles.field}
+            keyboardType='default'
+            placeholder='Publica aca!'
+            onChangeText={text => this.setState({ description: text })}
+            value={this.state.description} />
 
-        <TouchableOpacity style={styles.postButton} onPress={() => this.handleSubmit()}>
-          <Text style={styles.postButtonText}>Subir!</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.postButton} onPress={() => this.handleSubmit()}>
+            <Text style={styles.postButtonText}>Subir!</Text>
+          </TouchableOpacity>
+        </View>) : (<View style={styles.container}><Text style={styles.title}>Para crear un posteo es necesario que estes logueado</Text>
+          <TouchableOpacity style={styles.irLoginButton} onPress={() => this.props.navigation.navigate('Login')}><Text style={styles.postButtonText}>Ir a login</Text></TouchableOpacity></View>
+        )}
+
       </View>
     )
   }
@@ -97,7 +102,19 @@ const styles = StyleSheet.create({
     color: '#grey',
     fontSize: 16,
     textAlign: 'center',
-  }
+  }, 
+  irLoginButton: {
+    backgroundColor: "lightpink",
+    padding: 15,
+    width: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    shadowColor: '#ccc',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
 });
 
 export default NewPost
