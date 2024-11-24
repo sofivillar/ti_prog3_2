@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
 import { db, auth } from "../firebase/config";
 import firebase from 'firebase';
 // import AntDesign from '@expo/vector-icons/AntDesign';
@@ -18,7 +18,7 @@ export class Post extends Component {
         db.collection("posts").doc(this.props.posts.id)
             .update({ likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email) })
             .then(() => this.setState({
-                likes: this.props.posts.data.likes.length,
+                likes: this.state.likes + 1,
                 miLike: true
             }))
     }
@@ -27,29 +27,29 @@ export class Post extends Component {
         db.collection("posts").doc(this.props.posts.id)
             .update({ likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email) })
             .then(() => this.setState({
-                likes: this.props.posts.data.likes.length,
+                likes: this.state.likes - 1,
                 miLike: false
             }))
     }
 
     render() {
-        console.log(this.props.posts);
-
         const { posts } = this.state;
-        const createdAt = new Date(posts.createdAt).toLocaleDateString();
+        const createdAt = new Date(posts.data.createdAt).toLocaleDateString();
 
         return (
             <View style={styles.container}>
                 <Text style={styles.description}>{this.props.posts.data.description}</Text>
                 <Text style={styles.info}>Usuario: {posts.data.owner} </Text>
-                <Text style={styles.info}>Likes: {posts.data.likes} </Text>
+                <Text style={styles.info}>Likes: {this.state.likes} </Text>
                 <Text style={styles.info}>Creado el: {createdAt} </Text>
 
-                {this.state.miLike == true ? <TouchableOpacity style={styles.button} onPress={() => this.handleDislike()}><Text>Dislike</Text></TouchableOpacity> : <TouchableOpacity style={styles.button} onPress={() => this.handleLike()}><Text>Like</Text></TouchableOpacity>}
-
-                <TouchableOpacity style={styles.deleteButton}>
-                    <Text>Eliminar publicacion</Text>
-                </TouchableOpacity>
+                {this.state.miLike == true ? <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => this.handleDislike()}><Text>Dislike</Text>
+                </TouchableOpacity> : <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => this.handleLike()}><Text>Like</Text>
+                </TouchableOpacity>}
             </View>
         )
     }
@@ -87,13 +87,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
-    },
-    deleteButton: {
-        backgroundColor: '#ffdcd6',
-        padding: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-        marginTop: 10,
     }
 })
 

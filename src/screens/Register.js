@@ -56,7 +56,7 @@ export default class Register extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Register</Text>
+        <Text style={styles.title}>REGISTER</Text>
 
         <TextInput style={styles.field}
           keyboardType='email-address'

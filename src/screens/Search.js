@@ -17,13 +17,15 @@ export default class Search extends Component {
       .onSnapshot(docs => {
         let users = [];
 
-
         docs.forEach(doc => {
-          users.push({ id: doc.id, data: doc.data() })
+          users.push({
+            id: doc.id,
+            data: doc.data()
+          })
         });
-        console.log("Sanpshot");
+
         this.setState({
-          users:users
+          users: users
         })
 
       })
@@ -37,14 +39,18 @@ export default class Search extends Component {
     const resultadosBusqueda = this.handleSearch()
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Search for Users</Text>
+        <Text style={styles.title}>Buscador de usuarios</Text>
         <TextInput style={styles.field}
-          placeholder='Search' 
-          keyboardType='default' 
-          value={this.state.busqueda} 
+          placeholder='Search'
+          keyboardType='default'
+          value={this.state.busqueda}
           onChangeText={(texto) => this.setState({ busqueda: texto })}
         />
-        {resultadosBusqueda.length === 0 ? (<Text style={styles.resultadoText}>No hay resultados para tu busqueda</Text>) : (<FlatList style={styles.flatList} data={resultadosBusqueda} keyExtractor={item => item.id.toString()} renderItem={({ item }) => <Text style={styles.resultadoText}> {item.data.username}</Text> }/> )}
+        {resultadosBusqueda.length === 0 ? (
+          <Text style={styles.resultadoText}>No hay resultados para tu busqueda</Text>)
+          : (
+            <FlatList style={styles.flatList} data={resultadosBusqueda} keyExtractor={item => item.id.toString()} renderItem={({ item }) =>
+              <Text style={styles.resultadoText}> {item.data.username}</Text>} />)}
       </View>
     )
   }

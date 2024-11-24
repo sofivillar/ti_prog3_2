@@ -27,14 +27,12 @@ export class NewPost extends Component {
   }
 
   handleSubmit() {
-    const user = auth.currentUser
-
-    if (user) {
+    if (auth.currentUser) {
       db.collection('posts').add({
-        owner: user.email,
+        owner: auth.currentUser.email,
         description: this.state.description,
-        createdAt: Date.now(), // no funciona dice invalid date
-        likes: [] // Para después, cuando alguien likee el posteo voy a agregar su mail aca
+        createdAt: Date.now(),
+        likes: [] 
       })
         .then(() => {
           this.setState({ description: '' });
@@ -43,10 +41,11 @@ export class NewPost extends Component {
         .catch(error => { console.log("Algo fallo en el posteo", error) });
     }
   }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Create New Post</Text>
+        <Text style={styles.title}>Nueva publicacion</Text>
 
         <TextInput style={styles.field}
           keyboardType='default'
@@ -55,7 +54,7 @@ export class NewPost extends Component {
           value={this.state.description} />
 
         <TouchableOpacity style={styles.postButton} onPress={() => this.handleSubmit()}>
-          <Text style={styles.postButtonText}>Post!</Text>
+          <Text style={styles.postButtonText}>Subir!</Text>
         </TouchableOpacity>
       </View>
     )

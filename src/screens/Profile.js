@@ -32,7 +32,7 @@ export class Profile extends Component {
     db.collection("posts").doc(posts.id).delete()
       .then(() => {
         console.log("Se elimino la publicacion");
-         this.props.delete(posts.id)
+        this.props.delete(posts.id)
       })
       .catch((error) => {
         console.log(error);
@@ -64,11 +64,13 @@ export class Profile extends Component {
             let posts = [];
 
             docs.forEach(doc => {
+              console.log("Documento recuperado:", doc.data());
               posts.push({
                 id: doc.id,
                 data: doc.data()
               });
             });
+            console.log("Posts finales:", posts);
             this.setState({ posteos: posts });
           });
 
@@ -77,12 +79,10 @@ export class Profile extends Component {
   }
 
   render() {
-    console.log(this.state.posteos);
-    
     return (
       <View style={styles.container}>
         <View style={styles.userInfo}>
-          <Text style={styles.title}>Profile</Text>
+          <Text style={styles.title}>Mi perfil</Text>
           <Text style={styles.username}>{this.state.username}</Text>
           <Text style={styles.email}>{this.state.email}</Text>
           <Text style={styles.posts}>Posteos: {this.state.posteos.length}</Text>
@@ -92,11 +92,20 @@ export class Profile extends Component {
           </TouchableOpacity>
         </View>
 
-        <FlatList style={styles.flatList} data={this.state.posteos} keyExtractor={(item) => item.id.toString()} renderItem={({ item }) => (
-          <Post
-            posts={item}/>
+        {this.state.posteos.length === 0 ? (
+          <View>
+            <Text>No hay publicaciones</Text>
+          </View>
+        ) : (
+          <FlatList style={styles.flatList}
+            data={this.state.posteos}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <Post
+                posts={item} />
+            )}
+          />
         )}
-        />
       </View>
     )
   }
@@ -133,7 +142,7 @@ const styles = StyleSheet.create({
     color: '#222',
     marginBottom: 3
   },
-  posts:{
+  posts: {
     fontSize: 14,
     color: '#222',
     marginBottom: 3
@@ -146,7 +155,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
-    marginBottom: 15, 
+    marginBottom: 15,
     marginTop: 10
   },
 
@@ -154,10 +163,10 @@ const styles = StyleSheet.create({
     color: '#grey',
     fontSize: 16,
     textAlign: 'center',
-  }, 
+  },
 
-  flatList:{ 
-    flex: 1, 
+  flatList: {
+    flex: 1,
     width: '100%'
   }
 });

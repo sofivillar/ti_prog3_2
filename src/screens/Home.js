@@ -25,8 +25,8 @@ export default class Home extends Component {
     }
 
     handlePosts = () => {
-        db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(
-            (docs) => {
+        db.collection('posts').orderBy('createdAt', 'desc')
+            .onSnapshot((docs) => {
                 let posts = [];
                 docs.forEach(doc => {
                     posts.push({
@@ -45,7 +45,6 @@ export default class Home extends Component {
     }
 
     render() {
-
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>Home</Text>
