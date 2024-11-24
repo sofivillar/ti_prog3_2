@@ -32,11 +32,14 @@ export default class Search extends Component {
   }
 
   handleSearch() {
-    return this.state.users.filter((usuario) => { return usuario.data.username.toLowerCase().includes(this.state.busqueda.toLowerCase()) })
+    return this.state.users.filter((usuario) => {
+      return usuario.data.username.toLowerCase().includes(this.state.busqueda.toLowerCase())
+    })
   }
 
   render() {
     const resultadosBusqueda = this.handleSearch()
+
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Buscador de usuarios</Text>

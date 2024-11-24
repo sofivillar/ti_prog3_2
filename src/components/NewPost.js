@@ -12,7 +12,6 @@ export class NewPost extends Component {
   }
 
   componentDidMount() {
-    const user = auth.currentUser
     db.collection('users').onSnapshot(
       docs => {
         let users = []
@@ -32,7 +31,7 @@ export class NewPost extends Component {
         owner: auth.currentUser.email,
         description: this.state.description,
         createdAt: Date.now(),
-        likes: [] 
+        likes: []
       })
         .then(() => {
           this.setState({ description: '' });
@@ -60,6 +59,7 @@ export class NewPost extends Component {
     )
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

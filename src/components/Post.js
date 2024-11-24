@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
 import { db, auth } from "../firebase/config";
 import firebase from 'firebase';
-// import AntDesign from '@expo/vector-icons/AntDesign';
 
 export class Post extends Component {
     constructor(props) {

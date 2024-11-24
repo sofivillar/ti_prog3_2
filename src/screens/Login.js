@@ -15,7 +15,7 @@ export default class Login extends Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     auth.onAuthStateChanged(user => {
       if (user) {
         this.props.navigation.navigate('HomeMenu');
@@ -25,7 +25,7 @@ export default class Login extends Component {
 
   handleLogin = () => {
     const { email, password } = this.state;
-    
+
     auth.signInWithEmailAndPassword(email, password)
       .then((response) => {
         console.log(response)
@@ -35,7 +35,7 @@ export default class Login extends Component {
       .catch(error => {
         //this.setState({ error: 'Credenciales inválidas.' })
         if (!email.includes("@")) {
-          this.setState({ messageErr:"Email mal escrito"});
+          this.setState({ messageErr: "Email mal escrito" });
         } else if (password.length < 6) {
           this.setState({ messageErr: "La contraseña debe tener minimo 6 caracteres" });
         } else {

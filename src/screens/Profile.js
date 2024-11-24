@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import { auth, db } from "../firebase/config";
 import { StyleSheet } from 'react-native';
 import Post from '../components/Post';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 export class Profile extends Component {
 
@@ -26,13 +28,13 @@ export class Profile extends Component {
       })
   }
 
-  handleDeletePost = () => {
+  handleDeletePost = (postId) => {
     const { posts } = this.state
 
-    db.collection("posts").doc(posts.id).delete()
+    db.collection("posts").doc(postId).delete()
       .then(() => {
         console.log("Se elimino la publicacion");
-        this.props.delete(posts.id)
+        this.props.delete(postId)
       })
       .catch((error) => {
         console.log(error);
@@ -59,7 +61,7 @@ export class Profile extends Component {
           });
 
         db.collection("posts")
-          .where("email", "==", auth.currentUser.email)
+          .where("owner", "==", auth.currentUser.email)
           .onSnapshot(docs => {
             let posts = [];
 
@@ -70,7 +72,6 @@ export class Profile extends Component {
                 data: doc.data()
               });
             });
-            console.log("Posts finales:", posts);
             this.setState({ posteos: posts });
           });
 
@@ -101,8 +102,14 @@ export class Profile extends Component {
             data={this.state.posteos}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <Post
-                posts={item} />
+              <View>
+                <Post
+                  posts={item}
+                />
+                <TouchableOpacity style={styles.buttonDelete} onPress={() => this.handleDeletePost(item.id)}>
+                  <FontAwesomeIcon icon={faTrashCan} size={16} color="black" />
+                </TouchableOpacity>
+              </View>
             )}
           />
         )}
@@ -152,7 +159,6 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 4,
     shadowColor: '#ccc',
-    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
     marginBottom: 15,
@@ -168,5 +174,16 @@ const styles = StyleSheet.create({
   flatList: {
     flex: 1,
     width: '100%'
-  }
+  },
+
+  buttonDelete: {
+    padding: 15,
+    borderRadius: 4,
+    backgroundColor: 'white',
+    shadowColor: '#ccc',
+    width: '15%',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
