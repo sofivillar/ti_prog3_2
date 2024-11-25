@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { db, auth } from "../firebase/config";
 import firebase from 'firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -46,9 +46,9 @@ export class Post extends Component {
                 <Text style={styles.info}>Creado el: {createdAt} </Text>
 
                 {this.state.miLike == true ? <TouchableOpacity
-                    onPress={() => this.handleDislike()}><FontAwesomeIcon icon={solidHeart} size={18} color='pink'/>
+                    onPress={() => this.handleDislike()}><FontAwesomeIcon icon={solidHeart} size={18} color='pink' />
                 </TouchableOpacity> : <TouchableOpacity
-                    onPress={() => this.handleLike()}><FontAwesomeIcon icon={regularHeart} size={18} color='pink'/>
+                    onPress={() => this.handleLike()}><FontAwesomeIcon icon={regularHeart} size={18} color='pink' />
                 </TouchableOpacity>}
             </View>
         )

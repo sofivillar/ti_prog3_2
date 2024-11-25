@@ -32,8 +32,7 @@ export default class Login extends Component {
         this.setState({ loggedIn: true, messageErr: "" });
         this.props.navigation.navigate("HomeMenu");
       })
-      .catch(error => {
-        //this.setState({ error: 'Credenciales inválidas.' })
+      .catch(() => {
         if (!email.includes("@")) {
           this.setState({ messageErr: "Email mal escrito" });
         } else if (password.length < 6) {
@@ -72,7 +71,6 @@ export default class Login extends Component {
         <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')}>
           <Text style={styles.registerText}>Ir a Register</Text>
         </TouchableOpacity>
-
       </View>
     )
   }

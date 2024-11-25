@@ -11,20 +11,6 @@ export class NewPost extends Component {
     }
   }
 
-  componentDidMount() {
-    db.collection('users').onSnapshot(
-      docs => {
-        let users = []
-        docs.forEach(doc =>
-          users.push({
-            id: doc.id
-          })
-        )
-      }
-    )
-    // Ver si hay un usuario logueado
-  }
-
   handleSubmit() {
     if (auth.currentUser) {
       db.collection('posts').add({
@@ -45,7 +31,7 @@ export class NewPost extends Component {
     return (
       <View style={styles.container}>
 
-        {auth.currentUser ? (<View>
+        <View>
           <Text style={styles.title}>Nueva publicacion</Text>
           <TextInput style={styles.field}
             keyboardType='default'
@@ -56,9 +42,7 @@ export class NewPost extends Component {
           <TouchableOpacity style={styles.postButton} onPress={() => this.handleSubmit()}>
             <Text style={styles.postButtonText}>Subir!</Text>
           </TouchableOpacity>
-        </View>) : (<View style={styles.container}><Text style={styles.title}>Para crear un posteo es necesario que estes logueado</Text>
-          <TouchableOpacity style={styles.irLoginButton} onPress={() => this.props.navigation.navigate('Login')}><Text style={styles.postButtonText}>Ir a login</Text></TouchableOpacity></View>
-        )}
+        </View>
 
       </View>
     )
@@ -103,7 +87,7 @@ const styles = StyleSheet.create({
     color: '#grey',
     fontSize: 16,
     textAlign: 'center',
-  }, 
+  },
   irLoginButton: {
     backgroundColor: "lightpink",
     padding: 15,

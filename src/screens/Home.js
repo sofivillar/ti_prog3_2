@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { FlatList } from 'react-native-web';
 import Post from '../components/Post';
 import { auth, db } from "../firebase/config";
@@ -48,20 +48,9 @@ export default class Home extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>Home</Text>
-                {auth.currentUser ? (<FlatList style={styles.flatlist} data={this.state.posts} keyExtractor={(item) => item.id} renderItem={({ item }) => <Post posts={item} />} />
-                ) : (<View style={styles.botones}>
-                    <TouchableOpacity style={styles.button}
-                        onPress={() => this.props.navigation.navigate('Login')}>
-                        <Text style={styles.buttonText}>Ir a Login</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}
-                        onPress={() => this.props.navigation.navigate('Register')}>
-                        <Text style={styles.buttonText}>Ir a Register</Text>
-                    </TouchableOpacity>
-                </View>)}
+                <FlatList style={styles.flatlist} data={this.state.posts} keyExtractor={(item) => item.id} renderItem={({ item }) => <Post posts={item} />} />
             </View>
         )
-
     }
 }
 

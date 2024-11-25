@@ -25,15 +25,9 @@ export default class Register extends Component {
   }
 
   handleRegister(email, password) {
-
-    if (!this.state.email || !this.state.password || !this.state.username) {
-      this.setState({ messageErr: "Quedaron campos vacios" });
-      return;
-    }
-
     auth
       .createUserWithEmailAndPassword(email, password)
-      .then(response => {
+      .then(() => {
         db.collection("users").add({
           email: this.state.email,
           username: this.state.username,
@@ -77,13 +71,14 @@ export default class Register extends Component {
           onChangeText={text => this.setState({ username: text })}
           value={this.state.username} />
 
-        {formCompleto && (
+        {formCompleto ? (
           <TouchableOpacity onPress={() => this.handleRegister(this.state.email, this.state.password)} style={styles.button}>
             <Text style={styles.buttonText}>Registrate!</Text>
-          </TouchableOpacity>
-        )}
+          </TouchableOpacity>)
+          : null
+        }
 
-        {this.state.messageErr && <Text>{this.state.messageErr}</Text>}
+        {this.state.messageErr ? <Text>{this.state.messageErr}</Text> : null}
 
         <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
           <Text style={styles.loginText}>Ya tengo cuenta</Text>

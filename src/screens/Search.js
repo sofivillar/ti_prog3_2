@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, TextInput, FlatList, StyleSheet } from 'react-native'
-import { auth, db } from "../firebase/config";
+import { View, Text, TextInput, FlatList, StyleSheet } from 'react-native'
+import { db } from "../firebase/config";
 
 export default class Search extends Component {
 
@@ -38,7 +38,7 @@ export default class Search extends Component {
   }
 
   render() {
-    const resultadosBusqueda = this.handleSearch()   
+    const resultadosBusqueda = this.handleSearch()
 
     return (
       <View style={styles.container}>
@@ -49,13 +49,13 @@ export default class Search extends Component {
           value={this.state.busqueda}
           onChangeText={(texto) => this.setState({ busqueda: texto })}
         />
-       
-            <FlatList style={styles.flatList} data={resultadosBusqueda} keyExtractor={item => item.id.toString()} renderItem={({ item }) =>
-              <View style={styles.resultadoItem}>
-                <Text style={styles.resultadoUser}>{item.data.username}</Text>
-                <Text>{item.data.email}</Text>
-              </View> 
-              }/>
+
+        <FlatList style={styles.flatList} data={resultadosBusqueda} keyExtractor={item => item.id.toString()} renderItem={({ item }) =>
+          <View style={styles.resultadoItem}>
+            <Text style={styles.resultadoUser}>{item.data.username}</Text>
+            <Text>{item.data.email}</Text>
+          </View>
+        } />
       </View>
     )
   }
@@ -98,9 +98,9 @@ const styles = StyleSheet.create({
   resultadoItem: {
     fontSize: 16,
     padding: 10,
-    margin:20,
+    margin: 20,
     width: '80%',
-    alignItems: 'center', 
+    alignItems: 'center',
     alignContent: 'center',
     alignSelf: 'center',
     backgroundColor: '#fff',
