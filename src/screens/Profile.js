@@ -144,26 +144,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
     color: '#000',
-    marginBottom: 10,
+    marginBottom: 20,
+    textAlign: 'center'
   },
   username: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#222',
-    marginBottom: 5,
+    marginVertical: 5,
   },
   email: {
     fontSize: 15,
     color: '#222',
-    marginBottom: 3
+    marginVertical: 5
   },
   posts: {
     fontSize: 14,
     color: '#222',
-    marginBottom: 3
+    marginVertical: 5
   },
   button: {
     backgroundColor: "lightpink",

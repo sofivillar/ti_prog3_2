@@ -74,10 +74,11 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
     color: '#000',
     marginBottom: 20,
+    textAlign: 'center'
   },
   field: {
     height: 40,
@@ -106,14 +107,13 @@ const styles = StyleSheet.create({
   irLoginButton: {
     backgroundColor: "lightpink",
     padding: 15,
-    width: 150,
-    justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4,
     shadowColor: '#ccc',
-    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
+    marginBottom: 15,
+    marginTop: 10
   },
 });
 

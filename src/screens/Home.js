@@ -70,33 +70,27 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#f9f9f9',
         alignItems: 'center',
+        justifyContent: 'center',
         padding: 20,
     },
     title: {
         fontSize: 28,
         fontWeight: 'bold',
         color: '#333',
-        marginBottom: 20,
+        marginBottom: 30,
         textAlign: 'center',
-    },
-    navButtons: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 20,
-        width: '100%',
     },
     button: {
         backgroundColor: "lightpink",
         padding: 10,
-        borderRadius: 5,
-        width: '18%',
+        borderRadius: 15,
+        width: '30%',
         alignItems: 'center',
-        marginHorizontal: 5,
+        marginBottom: 10,
     },
     buttonText: {
         color: '#222',
-        fontSize: 12,
+        fontSize: 13,
         fontWeight: 'bold',
     },
     flatlist: {
@@ -105,10 +99,9 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     botones: {
-        flexDirection: 'row',
-        marginBottom: 20,
+        flexDirection: 'column',
+        marginBottom: 30,
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center'
     }
 });

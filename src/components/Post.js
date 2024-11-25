@@ -63,13 +63,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginVertical: 10,
         width: '100%',
-        margin: 1,
+        margin: 10,
+        padding: 15
     },
     description: {
         fontSize: 16,
         color: '#555',
         marginBottom: 10,
         fontWeight: 'bold',
+        textAlign: 'center'
     },
     info: {
         fontSize: 14,

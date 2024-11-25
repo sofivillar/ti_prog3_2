@@ -85,8 +85,8 @@ export default class Register extends Component {
 
         {this.state.messageErr && <Text>{this.state.messageErr}</Text>}
 
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} style={styles.button}>
-          <Text style={styles.buttonText}>Ya tengo cuenta</Text>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
+          <Text style={styles.loginText}>Ya tengo cuenta</Text>
         </TouchableOpacity>
 
       </View>
@@ -137,6 +137,10 @@ const styles = StyleSheet.create({
     color: '#grey',
     fontSize: 16,
     textAlign: 'center',
-  }
+  },
 
+  loginText: {
+    color: '#000',
+    marginTop: 10,
+  }
 })
