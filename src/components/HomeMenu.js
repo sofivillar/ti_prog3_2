@@ -5,10 +5,19 @@ import Home from "../screens/Home";
 import NewPost from './NewPost';
 import Profile from '../screens/Profile';
 import Search from '../screens/Search';
+import { auth } from "../firebase/config";
 
 const Tab = createBottomTabNavigator();
 
 class HomeMenu extends Component {
+
+    componentDidMount() {
+        auth.onAuthStateChanged(user => {
+            if (!user) {
+                this.props.navigation.navigate('Login');
+            }
+        });
+    }
 
     render() {
         return (

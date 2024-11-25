@@ -38,7 +38,7 @@ export default class Search extends Component {
   }
 
   render() {
-    const resultadosBusqueda = this.handleSearch()
+    const resultadosBusqueda = this.handleSearch()   
 
     return (
       <View style={styles.container}>
@@ -49,11 +49,13 @@ export default class Search extends Component {
           value={this.state.busqueda}
           onChangeText={(texto) => this.setState({ busqueda: texto })}
         />
-        {resultadosBusqueda.length === 0 ? (
-          <Text style={styles.resultadoText}>No hay resultados para tu busqueda</Text>)
-          : (
+       
             <FlatList style={styles.flatList} data={resultadosBusqueda} keyExtractor={item => item.id.toString()} renderItem={({ item }) =>
-              <Text style={styles.resultadoText}> {item.data.username}</Text>} />)}
+              <View style={styles.resultadoItem}>
+                <Text style={styles.resultadoUser}>{item.data.username}</Text>
+                <Text>{item.data.email}</Text>
+              </View> 
+              }/>
       </View>
     )
   }
@@ -65,6 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
     alignItems: 'center',
     padding: 20,
+    justifyContent: 'flex-start'
   },
   title: {
     fontSize: 24,
@@ -95,8 +98,17 @@ const styles = StyleSheet.create({
   resultadoItem: {
     fontSize: 16,
     padding: 10,
+    margin:20,
+    width: '80%',
+    alignItems: 'center', 
+    alignContent: 'center',
+    alignSelf: 'center',
     backgroundColor: '#fff',
     borderBottomColor: '#ccc',
     borderBottomWidth: 1,
   },
+  resultadoUser: {
+    fontWeight: 'bold',
+    fontSize: 16
+  }
 });
